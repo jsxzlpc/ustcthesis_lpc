@@ -1,0 +1,89 @@
+\chapter{相关理论知识}
+强化学习主要用来解决序贯决策问题：即需要连续不断地做出决策，才能实现最终的目标。因此，求解强化学习问题也就是求出一个最优的策略，使得得到回报最大化。而一般的序贯决策问题可以利用马尔科夫决策过程（Markov Decision Process, MDP）的框架来描述，在利用马尔科夫决策过程将问题形式化后，可以使用基于模型的动态规划方法和基于无模型的强化学习方法来解决MDP问题，其中，值函数的估计的方法又包括参数化函数逼近和非参数化函数逼近两种。本章会依次对它们进行简要的介绍。
+
+\section{马尔科夫决策过程}
+% 介绍马尔科夫决策过程，策略、累计回报、值函数、贝尔曼方程、最优值函数
+\paragraph{马尔科夫决策过程的定义}
+马尔科夫决策过程是强化学习的理论基础，通常用一个四元组$<S,A,p,r>$表示，其中：
+
+$S$表示有限的状态空间，定义为一个有穷集合$\{ S_1,S_2,\cdots ,S_N \}$，其中，$|S| = N$，状态空间的大小为$N$。$A$表示有限的行为空间，定义为一个有穷集合$\{ A_1,A_2,\cdots ,A_M \}$，其中，$|A| = M$，行为空间的大小为$M$。$p$表示状态转移概率，$r$表示奖赏函数。
+
+在任意的离散时间点$t$时，环境状态为$S_{t}$，此刻系统采取行为$A_t$，会得到有限的即时奖赏$R_{t}$，并且状态也会转移到下一个状态$S_{t+1}$。奖赏$R_{t}$是根据奖赏函数$r$得到的，下一时刻的状态$S_{t+1}$是根据状态转移函数$p$得到的，又因为马尔科夫决策过程的状态具有马尔科夫性，因此状态转移函数和奖赏函数都仅和当前状态和行为有关，与历史的状态序列和行为序列无关。即：$p(s^{'},r|s,a) = Pr\{S_{t}=s^{'}, R_t=r|S_{t-1}=s, A_{t-1}=a\}$且$\sum_{s^{'}\in S}p(s^{'}|s,a)=1$，$\forall s\in S,\forall a\in A$。根据状态转移的情况，可以分为确定性状态转移和随机性状态转移。确定性状态转移中，会转移到确定性的下一状态，而在随机性状态转移中，迁移到的下一状态是不确定的，是一个随机变量。
+
+\paragraph{策略和回报}
+\subparagraph{策略}
+强化学习的目标是从给定马尔科夫决策过程中，寻找最优的策略。所谓策略是指在某一状态下，所采取的动作或所采取动作的概率，通常用符号$\pi$表示：$\pi(s,a)=p[A_{t}=a|S_{t}=s]$。分为确定策略和随机策略，其中确定策略输出一个动作序列，而随机策略输出该状态下所采取动作的概率。
+\subparagraph{回报}
+在强化学习的过程中，Agent的任务是在与环境的交互中，学习一个策略$\pi$，使的其产生的累积奖赏（reward）即回报最大化。假设在时刻$t$后接收到的奖赏序列为$\{R_{t+1}, R_{t+2},\cdots\}$，通常我们采用折扣累积回报的方式计算回报：
+\begin{equation}
+G_{t}=\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}
+\end{equation}
+式中，$\gamma<1$，为一个常量，称为折扣因子。在Agent与环境的交互过程中，如果人物可以自然地被分为带有终止时间片的片段，则该任务称为情节式（episodes）任务。如果任务无法分解成若干片段，整个任务需要不断的进行下去，则改任务称为连续式（continous）任务。
+
+\paragraph{值函数}
+在上一节中的累积回报$G_{t}$是个随机变量，不是一个确定的值，因此无法描述，但其期望是个确定值，因此可以作为状态值函数，用来评估状态$s$的价值。即：当Agent采取策略$\pi$时，回报服从一个分布，且回报在状态$s$的期望值定义为策略$\pi$状态值函数：
+\begin{equation}
+v_{\pi}(s)=\mathbb{E}_{\pi}[G_{t}|S_t=s]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]
+\end{equation}
+相应地，策略$\pi$的状态行为值函数为：
+\begin{equation}
+q_{\pi}(s,a)=\mathbb{E}_{\pi}[G_{t}|S_t=s,A_t=a]
+=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s,A_t=a]
+\end{equation}
+因为上述状态值函数的形式实际应用中不方便表达，因此，我们可以进行进一步的推导，得到状态值函数的贝尔曼方程：
+\begin{equation}
+\label{seq1}
+\begin{aligned}
+v_{\pi}(s)&=\mathbb{E}_{\pi}[G_{t}|S_t=s]\\
+&=\mathbb{E}_{\pi}[R_{t+1}+\gamma G_{t+1}|S_t=s]\\
+&=\sum_{a}\pi(a|s)\sum_{s^{'}}\sum_{r^{'}}p(s^{'},r|s,a)[r + \gamma\mathbb{E}_{\pi}[G_{t+1}|S_{t+1}=s^{'}]]\\
+&=\sum_{a}\pi(a|s)\sum_{s^{'},r}p(s^{'},r|s,a)[r+\gamma v_{\pi}(s^{'})], \forall s \in S
+\end{aligned}
+\end{equation}
+
+同样地，也可以得到状态行为值函数的贝尔曼方程：
+\begin{equation}
+\label{seq2}
+\begin{aligned}
+q_{\pi}(s,a)=\sum_{s^{'},r}p(s^{'},r|s,a)[r+\gamma \sum_{a'}\pi(a'|s') q_{\pi}(s^{'},a^{''})], \forall s \in S, \forall a \in A
+\end{aligned}
+\end{equation}
+计算值函数的目的是为了从数据中学习到最优策略。而每个策略对应着一个状态值函数，那么最优策略自然对应着最优状态值函数。首先寻找最优值函数，最优状态值函数$v_{*}(s)$是所有策略中值最大的值函数，即$v_{*}(s)＝\max_{\pi}v_{\pi}(s)$，同样地，最优状态行为值函数$q_{*}(s,a)$为在所有策略中值最大的状态行为值函数，即$q_{*}(s,a)＝\max_{\pi}q_{\pi}(s,a)$
+
+因此，我们又可以由式\eqref{seq1}和式\eqref{seq2}进行推导（过程略），分别得到最优状态值函数和最优状态行为值函数的贝尔曼最优方程：
+
+\begin{equation}
+\begin{aligned}
+v_{*}(s)=\max_{a}\sum_{s^{'},r}p(s^{'},r|s,a)[r+\gamma v_{\pi}(s^{'})]
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+q_{*}(s,a)=\sum_{s^{'},r}p(s^{'},r|s,a)[r+\gamma \max_{a'} {\sum_{a'}\pi(a'|s')} q_{\pi}(s^{'},a^{''})], \forall s \in S, \forall a \in A
+\end{aligned}
+\end{equation}
+
+最后，若求出了最优状态行为值函数，最优策略可以通过直接最大化 $q_{*}(s,a)$来决定：
+
+\begin{equation}
+\begin{aligned}
+\pi_{*}(a|s) = 
+    \begin{cases}
+        1 & if \ a=\argmax_{a\in A}q^{*}(s,a),\\
+        0 & otherwise.
+    \end{cases}
+\end{aligned}
+\end{equation}
+
+\section{强化学习经典算法}
+\subsection{动态规划法}
+\subsection{蒙特卡洛方法}
+\subsection{时间差分方法}
+
+\section{值函数逼近方法}
+\subsection{参数化函数逼近}
+\subsection{非参数函数化逼近}
+
+\section{本章小结}
+ 
