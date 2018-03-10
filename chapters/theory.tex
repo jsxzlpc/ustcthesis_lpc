@@ -169,7 +169,7 @@ v(S_{t})=v(S_{t})+\alpha (R_{t+1}+\gamma v(S_{t+1})-v(S_{t}))
 根据$\epsilon-greedy$策略在状态$s$下选择行为$a$\;
 \Repeat(（对每个情节的每一步）){$s$是终止状态}{
 	根据$\epsilon-greedy$策略在状态$s$下选择行为$a$，得到回报$r$和下一状态$s^{'}$\;
-	$Q(s,a)=Q(s,a)+\alpha[r+\gamma \max_{a} Q(s^{'},a^{'}-Q(s,a))]$\;
+	$Q(s,a)=Q(s,a)+\alpha[r+\gamma \max_{a} Q(s^{'},a^{'})-Q(s,a)]$\;
 	$s=s^{'}$，$a=a^{''}$\;
 	}
 }
