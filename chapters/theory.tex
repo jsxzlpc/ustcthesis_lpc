@@ -215,12 +215,18 @@ G^{n}_{t}=R_{t+1}+\gamma R_{t+1}+ \cdots +\gamma^{n-1} R_{t+n}+\gamma^{n} V(S_{t
 
 \subsection{参数化函数逼近}
 参数化函数逼近是从参数空间到值函数空间的映射，函数的形式和参数的个数事先由先验知识预设，而且函数的参数是通过关于值函数的样本数据来调整的。对于状态(状态行为)值函数可以由一组参数\bfseries $\theta$ \mdseries $\in \mathbb{R}^{n} $ 来近似，即
-\begin{displaymath}
+\begin{equation}
+\label{seq_2_3_1}
 \begin{aligned}
-\hat{v}(s,\mathbf{\theta})\approx v_{\pi}(s)\\
+\hat{v}(s,\mathbf{\theta})\approx v_{\pi}(s)
+\end{aligned}
+\end{equation}
+\begin{equation}
+\label{seq_2_3_2}
+\begin{aligned}
 \hat{q}(s,a,\mathbf{\theta})\approx q_{\pi}(s,a)
 \end{aligned}
-\end{displaymath}
+\end{equation}
 
 从近似的状态行为值函数中，我们可以发现针对每个状态行为对，不再存储其状态行为值，而是只存储一组参数，把从已知的状态行为对学到的函数通用化推广至那些未碰到的状态行为对中，这对于大规模的状态行为空间来说，相当于对其状态行为空间进行了压缩。由于\bfseries $\theta$ \mdseries $\in \mathbb{R}^{n}$，因此所需的存储开销为$O(n)$，当状态和行为空间规模较大且均为离散时，$n$通常远远小于为每个状态动作对存储值的开销$|S|\cdot|A|$。
 
