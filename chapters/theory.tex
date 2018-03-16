@@ -26,6 +26,7 @@ v_{\pi}(s)=\mathbb{E}_{\pi}[G_{t}|S_t=s]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\ga
 \end{equation}
 相应地，策略$\pi$的状态行为值函数可以用来评估在状态$s$下采取行为$a$的价值，公式化为：
 \begin{equation}
+\label{seq2_qsa}
 q_{\pi}(s,a)=\mathbb{E}_{\pi}[G_{t}|S_t=s,A_t=a]
 =\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s,A_t=a]
 \end{equation}
@@ -218,13 +219,13 @@ G^{n}_{t}=R_{t+1}+\gamma R_{t+1}+ \cdots +\gamma^{n-1} R_{t+n}+\gamma^{n} V(S_{t
 \begin{equation}
 \label{seq_2_3_1}
 \begin{aligned}
-\hat{v}(s,\mathbf{\theta})\approx v_{\pi}(s)
+\hat{v}(s,\bm{\theta})\approx v_{\pi}(s)
 \end{aligned}
 \end{equation}
 \begin{equation}
 \label{seq_2_3_2}
 \begin{aligned}
-\hat{q}(s,a,\mathbf{\theta})\approx q_{\pi}(s,a)
+\hat{q}(s,a,\bm{\theta})\approx q_{\pi}(s,a)
 \end{aligned}
 \end{equation}
 
