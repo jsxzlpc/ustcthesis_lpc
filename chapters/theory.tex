@@ -46,7 +46,7 @@
 强化学习的任务是从与环境的不断交互中，学习一个策略$\pi$，使其产生的累积奖赏（cumulative reward）最大化（即回报）。
 % 当给定一个策略$\pi$时，如何进行策略的评估呢？此时便用到了累积奖赏的概念。
 假设在时刻$t$后接收到的奖赏序列为$\{R_{t+1}, R_{t+2},\cdots\}$，那么采用折扣累积奖赏的方式计算回报可以表示为：
-\begin{equation}
+\begin{equation}\label{seq:reward}
 G_{t}=\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}
 \end{equation}
 
@@ -174,7 +174,7 @@ V(S_{t})=R_{t+1}+\gamma V(S_{t+1})
 \end{aligned}
 \end{equation}
 时刻$t$的时间差分为：
-\begin{equation}
+\begin{equation}\label{shijiachafen}
 \begin{aligned}
 \delta_{t}=R_{t+1}+\gamma V(S_{t+1})-V(S_{t})
 \end{aligned}
