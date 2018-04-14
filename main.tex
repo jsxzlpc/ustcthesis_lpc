@@ -13,7 +13,7 @@
 
 
 % \title{基于值函数的强化学习在市场营销决策中的研究}
-\title{基于值函数的强化学习在直效营销中的研究}
+\title{基于值函数的强化学习在直复营销中的研究}
 \author{李鹏程}
 \major{计算机应用技术}
 \supervisor{王行甫\ 副教授}
@@ -22,10 +22,10 @@
 % \professionaltype{专业学位类型}
 % \secrettext{机密\quad 小于等于20年}    % 内部|秘密|机密，注释本行则不保密
 
-\entitle{An Example of USTC Thesis Template for Bachelor, Master and Doctor}
+\entitle{Research of Reinforcement Learning with Value Function on Direct Marketing}
 \enauthor{Pengcheng Li}
-\enmajor{Mathematics and Applied Mathematics}
-\ensupervisor{Prof. Xingfu Wang}
+\enmajor{Computer Application Technology}
+\ensupervisor{A/Prof. Xingfu Wang}
 % \encosupervisor{Prof. Xuesen Qian}
 % \endate{May 1, 2017}    % today if commented
 % \enprofessionaltype{Professional degree type}
@@ -40,7 +40,7 @@
 %   frontmatter: 致谢、目录、中文摘要、英文摘要
 %   mainmatter: 正文章节、参考文献
 %   appendix: 附录
-%
+%状态行为）
 % 硕博论文:
 %   frontmatter: 中文摘要、英文摘要、目录、符号说明
 %   mainmatter: 正文、参考文献
@@ -48,31 +48,33 @@
 %   backmatter: 致谢、发表论文
 
 \frontmatter
-\input{chapters/abstract}
+% \input{chapters/abstract}
+\input{chapters/abstract_}
 \tableofcontents
 \listoffigures
 \listoftables
 \listofalgorithms
-\input{chapters/_notation}
 
 \mainmatter
-% \input{chapters/intro}
+
 \input{chapters/intro_}
 \input{chapters/theory}
 \input{chapters/advertise_}
+\input{chapters/direct_}
+\input{chapters/conclution}
+% \input{chapters/intro}
 % \input{chapters/advertising}
 % \input{chapters/direct}
-\input{chapters/direct_}
 % \input{chapters/advertising}
 % \input{chapters/simulation}
-\input{chapters/conclution}
 % \input{chapters/math}
 % \input{chapters/floats}
 % \input{chapters/citations}
 \bibliography{bib/ustc}
 
 \appendix
-\chapter{论文规范}
+% \chapter{论文规范}
+\input{chapters/_notation}
 
 \backmatter
 \input{chapters/acknowledgements}
