@@ -8,17 +8,18 @@
 \usepackage{amsmath}
 \usepackage{breqn}
 \usepackage{longtable}
-% \allowdisplaybreaks[3]
+\usepackage{diagbox}
+\usepackage{slashbox}
+% \usepackage{mathrsfs}
 \graphicspath{{figures/}}
 
 
-% \title{基于值函数的强化学习在市场营销决策中的研究}
-\title{基于值函数的强化学习在直复营销中的研究}
+\title{基于值函数的强化学习在\\直复营销中的研究}
 \author{李鹏程}
 \major{计算机应用技术}
 \supervisor{王行甫\ 副教授}
 % \cosupervisor{钱学森\ 教授}
-% \date{二〇一七年五月一日}    % 注释掉则为今日
+\date{二〇一八年四月}    % 注释掉则为今日
 % \professionaltype{专业学位类型}
 % \secrettext{机密\quad 小于等于20年}    % 内部|秘密|机密，注释本行则不保密
 
@@ -27,7 +28,7 @@
 \enmajor{Computer Application Technology}
 \ensupervisor{A/Prof. Xingfu Wang}
 % \encosupervisor{Prof. Xuesen Qian}
-% \endate{May 1, 2017}    % today if commented
+\endate{April, 2018}    % today if commented
 % \enprofessionaltype{Professional degree type}
 % \ensecrettext{Confidential\quad Less than or equal to 20 years}
 % Internal|Secret|Confidential
@@ -36,48 +37,62 @@
 
 \maketitle
 
-% 本科论文:
-%   frontmatter: 致谢、目录、中文摘要、英文摘要
-%   mainmatter: 正文章节、参考文献
-%   appendix: 附录
-%状态行为）
-% 硕博论文:
-%   frontmatter: 中文摘要、英文摘要、目录、符号说明
-%   mainmatter: 正文、参考文献
-%   appendix: 附录
-%   backmatter: 致谢、发表论文
+% % 本科论文:
+% %   frontmatter: 致谢、目录、中文摘要、英文摘要
+% %   mainmatter: 正文章节、参考文献
+% %   appendix: 附录
+% %状态行为）
+% % 硕博论文:
+% %   frontmatter: 中文摘要、英文摘要、目录、符号说明
+% %   mainmatter: 正文、参考文献
+% %   appendix: 附录
+% %   backmatter: 致谢、发表论文
 
 \frontmatter
-% \input{chapters/abstract}
 \input{chapters/abstract_}
 \tableofcontents
-\listoffigures
 \listoftables
 \listofalgorithms
+\listoffigures
+\input{chapters/_notation}
 
 \mainmatter
-
 \input{chapters/intro_}
 \input{chapters/theory}
 \input{chapters/advertise_}
 \input{chapters/direct_}
 \input{chapters/conclution}
-% \input{chapters/intro}
-% \input{chapters/advertising}
-% \input{chapters/direct}
-% \input{chapters/advertising}
-% \input{chapters/simulation}
-% \input{chapters/math}
-% \input{chapters/floats}
-% \input{chapters/citations}
 \bibliography{bib/ustc}
 
 \appendix
-% \chapter{论文规范}
-\input{chapters/_notation}
+
 
 \backmatter
 \input{chapters/acknowledgements}
 \input{chapters/publications}
 
 \end{document}
+
+ %1、摘要中可以使用缩写吗？
+ %2、第二章的英文需要首字母大写吗？
+ %3、描述问题时：各个营销点的时间间隔不固定
+     % 描述算法时：可变时间间隔问题
+  % 4、第一章研究现状，回归？
+    % 第一张的研究现状，需要写强化学习？研究热点部分是不是应该换个名字或者说法？
+
+    % 第三章：标准化 归一化
+           % 可变时间间隔
+
+
+
+
+
+
+
+
+
+
+
+
+
+

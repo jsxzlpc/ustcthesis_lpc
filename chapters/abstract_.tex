@@ -1,32 +1,27 @@
 \begin{abstract}
 
- 直复营销是企业的一项整体性、长期性的经营活动，贯穿于企业经营的全过程，营销策略的好坏严重影响着企业的生存和发展。在营销过程时，企业所追求的目标是长期收益最大化，而传统的经典分类算法和基于代价敏感的分类算法在处理该问题时只能考虑单个决策收益最大化，因此有很大的局限性。
+ 直复营销即一种可以得到客户直接回应的营销模式。作为企业的一项长期性经营活动，直复营销贯穿于企业发展的整个过程，因此，通常将长期收益作为评价营销效果的指标。近年来，随着智能化的快速发展，越来越多的企业希望借助机器学习的力量进行营销决策，但是传统的监督学习和非监督学习方法在处理该问题时只能最大化单个决策的即时收益，而直复营销需要随时间的推移进行连续决策，因而具有很大的局限性。
 
- % 特别是在当下如此激烈的市场竞争中，一种高效的营销决策方式对企业快速开拓市场、提高整体效益、增强自身竞争力具有重要作用。所以，近年来，随着信息化和智能化的快速发展，越来越多的企业希望借助人工智能的力量进行营销决策。特别地，
+ 强化学习是机器学习的重要组成部分，主要用于解决序贯决策问题。它通过智能体持续地与环境进行交互，并从环境反馈的延迟奖赏中学习状态与行为之间的映射关系，以使得累积奖赏最大化。考虑到直复营销的过程也是一个序贯决策过程，并且其追求的长期收益最大化与强化学习累积奖赏最大化的目标不谋而合，因此，使用强化学习技术解决直复营销决策问题具有天然的优势，这是本文研究的出发点。另外， 为了更好地适应实际需求，本文从基于值函数的强化学习方法着手，针对直复营销场景中营销决策点间的时间间间隔不固定、数据负载大导致学习速度慢以及客户状态的部分可观测等问题，提出相应的改进方法，并使用仿真环境进行评估。具体如下：
 
- 强化学习是机器学习的重要组成部分，主要用于解决序贯决策问题。它通过智能体不断地与环境进行交互，并从环境反馈的延迟奖赏中学习状态与行为之间的映射关系，以使的累积奖赏最大化。考虑到企业营销的过程也是一个序贯决策过程，并且其追求的长期收益最大化与强化学习累积奖赏最大化的目标不谋而合，因此，使用强化学习技术解决企业营销决策问题中有着天然的优势。为了更好的适应实际需求，本文针对直复营销场景中的营销决策点不固定、数据负载大学习效率不高以及客户状态的部分可观测性等三个方面对基于值函数的强化学习算法进行改进，并使用仿真环境验证所提方法的有效性。具体如下：
+ 一方面，针对直复营销场景中营销决策点间的时间间隔不固定以及数据规模大导致学习速度慢等问题，本文基于经典的强化学习算法Q-learning进行研究，并提出了改进的Q-learning算法。具体地，使用均值标准化的方法减少因为决策点间时间间隔不固定而给奖赏信号带来的噪声影响，进而又针对Q值函数在迭代过程中因为时间间隔更新不同步而带来的偏差问题，构建一个标准化因子，并仿照值函数的更新方法进行标准化因子的更新，由此提出Interval-Q算法。接着，针对Interval-Q算法在处理大规模数据时，训练速度慢，学习效率不高的问题，本文在Q采样法的基础上，引入时间差分（TD）偏差，提出基于TD偏差的Q采样法。最后，通过仿真实验证明，本文所提的Interval-Q算法在不定期直复营销场景中可以取得更高的收益，另外，基于TD偏差的Q采样法，可以在减少采样数量的同时达到更好的学习效果。 
 
- % 近年来，随着AlphaGo的成功，强化学习技术得到了学术界和工业界的广泛的关注，并且取得了令人振奋的表现。但是，大部分的研究和应用集中于机器人、游戏等领域，针对其它领域的研究和应用则相对较少。
+ 另一方面，针对传统强化学习算法无法有效处理直复营销场景中客户状态部分可观测的问题，本文基于深度强化学习DQN模型进行研究，并提出了基于双网络的DQN模型。具体地，首先结合营销场景的时序特点，提出通过使用基于RNN网络的DQN模型（DQN_RNN）以学习隐状态的方式来解决上述问题。然后，指出DQN_RNN模型在网络优化过程中不能很好地同时进行隐状态的学习和值函数的逼近，由此提出基于双网络的DQN模型：通过RNN网络从监督数据中学习隐状态的表示方法，再将RNN网络输出的隐状态信息作为DQN网络的输入状态进行强化学习，通过这种方式可以充分发挥这两个网络各自的优势，在提高值函数逼近效果的同时也能更好地学习隐状态。最后，为了取得更好的策略学习效果，又从网络结构和训练方法两个角度进行分析，提出改进的模型结构：双网络独立训练模型、双网络一步联合训练模型和双网络两步联合训练模型。通过仿真实验证明，本文所提出的基于双网络的DQN模型在定期直复营销场景中可以取得更高的收益。
 
- % （1）在直效营销场景中，因为序列之间的存在影响，导致传统的深度强化学习不能较好的进行值函数的逼近。因此，本文提出了基于RNN的深度强化学习混合模型。该混合模型由两个网络构成，其中，利用RNN网络的长时依赖性可以从监督数据中较好的学习到观测信息的隐状态，然后将其作为状态输入，再利用DQN网络强大的逼近能力进行强化学习。两个网络协同控制与优化，可以在不需要借助专家领域知识的情况下，提高值函数的学习精度，以更好的实现直效营销场景中客户生命价值最大化的目标。与其它深度强化学习相比，该模型没有直接将环境的观测值作为强化学习的状态输入，而是将观测值的隐状态作为输入，并且为了进一步提高学习精度，通过改变网络结构，提出了一步混合模型和两步混合模型。
-
-一方面，基于经典的强化学习算法Q-learning进行研究，结合直复营销场景中决策点间时间不固定问题以及数据规模大学习效率不高的问题，提出了改进的Q-learning算法。具体地，首先，为了减少不同决策点之间的可变时间间隔给强化学习中的奖赏信号带来的噪声影响，提出使用均值归一化的方法进行解决。接着，针对Q值函数在迭代更新过程中因为时间间隔更新不同步问题而带来的偏差影响，提出一个标准化因子，并仿照值函数更新方法进行标准化因子的更新，从而可以有效的解决以上偏差问题。最后，为了解决在直复营销场景中，随着数据量的提升，Q-learning算法更新速度慢，学习效率不高的问题，在Q-采样的基础上，引入TD偏差，提出基于TD偏差的Q-采样方法，以减少训练次数的同时提高学习效果。通过仿真实验证明，本文所提的基于可变时间间隔的Q-learning算法在不定期营销中可以取得高的收益，本文所提的基于TD偏差的Q-采样法，可以在减少采样样本数量的同时，可以获得更高的收益。
-
-另一方面，基于深度强化学习DQN模型进行研究，针对传统强化学习Q-learning在处理直复营销场景中的客户状态的部分可观测问题时，需要引入大量专家领域知识的问题，提出了基于RNN的深度强化学习混合模型。具体地，首先，结合直复营销场景的时序特点，提出使用基于RNN的DQN模型（DQN_RNN）来解决直复营销的决策问题。然后，指出DQN_RNN模型在网络优化过程中不能很好的同时处理隐状态的学习和值函数的逼近，并由此提出基于两个网络的混合模型：通过RNN网络从监督数据中学习到隐状态的表示方法后，再将隐状态作为DQN网络的状态输入进行强化学习，通过这种方式可以使的两个网络优势互补，在达到值函数逼近效果的同时也跟好地学习到了隐状态的表示方法，从而摆脱了需要借助专家领域知识的困扰。最后，为了达到更好的策略学习目的，又根据网络结构和参数训练方式的不同提出了三个改进模型：双网络独立训练模型、一步联合训练混合模型和两步联合训练混合模型。通过仿真实验证明，本文所提的混合训练模型的方法在定期营销中可以取得更高的收益，并且不需要利用大批量数据进行训练同样可以产生较好的营销策略。
-
-\keywords{强化学习；值函数；Q-learning；DQN；深度学习；直复营销}
+% ，并且不需要利用大批量数据同样可以产生较好的营销策略。
+\keywords{强化学习；值函数；Q-learning算法；深度Q网络；直复营销}
 \end{abstract}
 
 \begin{enabstract}
-  This is a sample document of USTC thesis \LaTeX{} template for bachelor,
-  master and doctor. The template is created by zepinglee and seisman, which
-  orignate from the template created by ywg. The template meets the
-  equirements of USTC theiss writing standards.
 
-  This document will show the usage of basic commands provided by \LaTeX{} and
-  some features provided by the template. For more information, please refer to
-  the template document ustcthesis.pdf.
+Direct Marketing is a marketing model in which the customers can directly respond to companies. As a long-term business activity of the companies, Direct Marketing run through the entire process of companies' development. Therefore, the Long-Term Value (LTV) is usually considered as an indicator to evaluate the marketing effectiveness. In recent years, with the rapid development of intelligence, more and more companies hope to use the technology of Machine Learning (ML) to make marketing decisions. However, the traditional Supervised Learning (SL) and Unsupervised Learning (UL) methods have great limitations when dealing with this problem, for the fact that these methods can only maximize the immediate profits of a single decision whereas in Direct Marketing sequences of decisions need to be made over time.
 
-  \enkeywords{University of Science and Technology of China (USTC); Thesis;
-  \LaTeX{} Template; Bachelor; Master; PhD}
+Reinforcement Learning (RL) is an important part of Machine Learning and is mainly used to solve sequential decision problems. In the process of RL, the Agent continuously interacts with the environment and learns the mapping relationship about the states and the actions from the delayed rewards of environment to maximize the cumulative discounted reward. Considering that the process of Direct Marketing is also a sequential decision-making process, and its goal of long-term profit maximization coincides with the goal of maximizing the cumulative discounted reward for Reinforcement learning. Therefore, it has great advantage to use Reinforcement Learning methods to solve the Direct Marketing decision problems, which is the starting point of this research. In addition, in order to effectively meet the actual needs, this research starts with Reinforcement Learning methods based on value function, aiming at three problems that the decision-making time intervals in the Direct Marketing are not same, the large-scale data limits the learning speed and the customer state is Partially Observable. Then the research proposes corresponding improvement methods, and use the simulation to evaluate these methods. Details as follows:
+
+On the one hand, aiming at the problems that the decision-making time intervals are not same in the Direct Marketing and large-scale data limits the learning speed of model. This research proposes the improved Q-learning algorithms based on the classical Q-learning algorithm. Specifically, a mean normalization method is used to reduce the noise impact on the reward signal caused by the different time intervals among decision points. Then a standardization factor is constructed for Q-learning and its update method follows the updated method of the value function, thus reducing the deviation of Q value function caused by the unsynchronized update of time interval during the iteration process, thus proposing the Interval-Q algorithm. Besides, for the problem that the training speed of the Interval-Q algorithm is slow when faced to the large-scale data, this research introduces the Temporal Difference TD bias to Q sampling method and proposes the Q sampling method based on the TD bias. Finally, simulation experiments show that the Interval-Q algorithm proposed in this research can achieve higher profits in the irregular Direct Marketing. In addition, the Q sampling method based on TD bias can achieve better results while reducing the number of samples.
+
+On the other hand, aiming at the problems that the traditional Reinforcement Learning algorithm cannot effectively deal with the Partially Observable of the customer state in the Direct Marketing. This research studies the DQN (Deep Q Network) model and proposes the improved DQN model based on two networks. Specifically, firstly, considering the temporality of marketing, the problem mentioned above is solved by using the DQN model based on the RNN network (termed as DQN_RNN) to learn the hidden state. Then, the research points out that it is a challenge for DQN_RNN model to learn the hidden state and approximate the value function at the same time in the optimization process of only a network. Therefore, the DQN model based on two networks is proposed: the hidden state is learned from the supervision data through the RNN. After that, the hidden state of the output of the RNN network is used as the input state of the DQN network for Reinforcement Learning. In this way, the advantages of the two networks can be fully utilized, and the hidden state can be better learned while improving the approximation effect of the value function. Finally, in order to obtain a better strategy, this research proposes three improved models by analyzing the network structure and training method: separate training model with two networks , one-step joint training model with two networks and two-step joint training model with two networks, Simulation experiments show that the DQN model based on the two networks proposed in this paper can achieve higher returns in the regular Direct Marketing.
+
+
+\enkeywords{Reinforcement Learning; Value function; Q-learning algorithm; Deep Q Network; Direct Marketing}
 \end{enabstract}
